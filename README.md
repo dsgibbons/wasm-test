@@ -1,13 +1,15 @@
+# wasm-test
+
 Test HTML page with WASM served via GitHub pages
 
-### Install dependencies
+## Install dependencies
 
 ```
 rustup target add wasm32-unknown-unknown  # not sure if needed
 cargo install wasm-pack
 ```
 
-### Build
+## Build
 
 ```
 cd wasm-test
