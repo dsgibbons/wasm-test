@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WASM Demo</title>
+</head>
+<body>
+    <h1>WASM Demo</h1>
+    <button id="wasmButton">Click Me!</button>
+
+    <script type="module">
+        // The URL of your WASM JavaScript bindings hosted on GitHub Pages
+        const wasmUrl = "https://dsgibbons.github.io/wasm-test/pkg/wasm_test.js";
+
+        async function loadWasm() {
+            try {
+                const wasmModule = await import(wasmUrl); // Dynamically import WASM bindings
+                await wasmModule.default(); // Initialize the WASM module
+                document.getElementById("wasmButton").addEventListener("click", wasmModule.log_message);
+            } catch (error) {
+                console.error("Failed to load the WASM module:", error);
+            }
+        }
+
+        loadWasm();
+    </script>
+</body>
+</html>
