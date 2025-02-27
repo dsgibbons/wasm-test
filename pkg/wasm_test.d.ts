@@ -1,13 +1,16 @@
 /* tslint:disable */
 /* eslint-disable */
 export function log_message(): void;
+export function process_file(file_bytes: Uint8Array): void;
 
 export type InitInput = RequestInfo | URL | Response | BufferSource | WebAssembly.Module;
 
 export interface InitOutput {
   readonly memory: WebAssembly.Memory;
   readonly log_message: () => void;
+  readonly process_file: (a: number, b: number) => void;
   readonly __wbindgen_export_0: WebAssembly.Table;
+  readonly __wbindgen_malloc: (a: number, b: number) => number;
   readonly __wbindgen_start: () => void;
 }
 

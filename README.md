@@ -3,8 +3,8 @@ Test HTML page with WASM served via GitHub pages
 ### Install dependencies
 
 ```
-rustup target add wasm32-unknown-unknown
-cargo install wasm-bindgen-cli
+rustup target add wasm32-unknown-unknown  # not sure if needed
+cargo install wasm-pack
 ```
 
 ### Build

@@ -25,5 +25,59 @@
 
         loadWasm();
     </script>
+
+    <h2>Upload File</h2>
+    <input type="file" id="fileInput">
+    <button id="processBtn" disabled>Process File in WASM</button>
+    <p id="status"></p>
+
+    <script>
+        let wasmModule;
+
+        // Load WebAssembly
+        async function loadWasm() {
+            try {
+                wasmModule = await import("https://dsgibbons.github.io/wasm-test/pkg/wasm_test.js");
+                console.log("WASM Loaded!");
+            } catch (err) {
+                console.error("Failed to load WASM:", err);
+            }
+        }
+
+        // Handle file upload
+        document.getElementById("fileInput").addEventListener("change", function(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                sessionStorage.setItem("uploadedFile", e.target.result);
+                document.getElementById("status").innerText = "File uploaded!";
+                document.getElementById("processBtn").disabled = false;
+            };
+            reader.readAsDataURL(file);
+        });
+
+        // Process file in WebAssembly
+        document.getElementById("processBtn").addEventListener("click", function() {
+            const fileData = sessionStorage.getItem("uploadedFile");
+            if (!fileData) {
+                console.error("No file found in sessionStorage.");
+                return;
+            }
+
+            // Convert base64 to binary
+            const byteCharacters = atob(fileData.split(",")[1]);
+            const byteArray = new Uint8Array(byteCharacters.length);
+            for (let i = 0; i < byteCharacters.length; i++) {
+                byteArray[i] = byteCharacters.charCodeAt(i);
+            }
+
+            // Call WebAssembly function
+            wasmModule.process_file(byteArray);
+        });
+
+        loadWasm(); // Load WASM on page load
+    </script>
 </body>
 </html>
