@@ -1,5 +1,9 @@
 use wasm_bindgen::prelude::*;
 
+// Use wee_alloc to provide memory allocation in WASM
+#[global_allocator]
+static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
+
 #[wasm_bindgen]
 pub fn log_message() {
     web_sys::console::log_1(&"Hello from WebAssembly!".into());
